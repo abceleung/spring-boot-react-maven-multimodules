@@ -8,7 +8,7 @@ My solution to the question I posted on [Reddit](https://old.reddit.com/r/learnj
 
 1. Create an empty top-level pom:
 
-   - `mvn archetype:generate "-DarchetypeGroupId=org.apache.maven.archetypes" "-DarchetypeArtifactId=maven-archetype-quickstart" "-DarchetypeVersion=RELEASE"`
+   - `mvn archetype:generate "-DarchetypeGroupId=org.codehaus.mojo.archetypes" "-DarchetypeArtifactId=pom-root" "-DarchetypeVersion=RELEASE"`
 
 2. Create an child maven module (for the React project):
 
