@@ -20,16 +20,27 @@ My solution to the question I posted on [Reddit](https://old.reddit.com/r/learnj
 
    - `npm create vite@latest`
 
-5. Create a `pom.xml` inside the newly generated folder and paste the content you copied in step 3 into it. Then delete the `<properties>` section inside it
+5. Create a `pom.xml` inside the newly generated folder and paste the content you copied in step 3 into it.
+6. Replace the whole `<properties>` section with the following:
 
-6. Create a Spring Boot project with [Spring Initializr](https://start.spring.io/) with the dependencies you need. You should at least add `Spring Web`
-7. Download and unzip the Spring Boot project onto the top-level folder
-8. Add `<module>backend</module>` item into the `<modules>` section in the top-level `pom.xml` (Replace `backend` with the folder name of your Spring Boot folder)
-9. Move the maven related item in the `backend` folder to top-level:
+```xml
+<properties>
+  <!-- Change as appropiate -->
+  <node.version>v20.9.0</node.version>
+  <frontend-maven-plugin.version>1.14.2</frontend-maven-plugin.version>
+  <frontend.build.output.dir>${basedir}/dist</frontend.build.output.dir>
+  <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+</properties>
+```
 
-   - `mv mvnw* ..`
+7. Create a Spring Boot project with [Spring Initializr](https://start.spring.io/) with the dependencies you need. You should at least add `Spring Web`
+8. Download and unzip the Spring Boot project onto the top-level folder
+9. Add `<module>backend</module>` item into the `<modules>` section in the top-level `pom.xml` (Replace `backend` with the folder name of your Spring Boot folder)
+10. Move the maven related item in the `backend` folder to top-level:
 
-   - `mv .mvn ..`
+- `mv mvnw* ..`
+
+- `mv .mvn ..`
 
 Now your folder structure should be something like this:
 
@@ -55,19 +66,18 @@ root
 
 ### Preparing build
 
-1. Open the `pom.xml` in the `frontend` folder with an editor. Replace the whole `<pluginManagement>` section with the following:
+1. Open the `pom.xml` in the `frontend` folder with an editor.
+
+Replace the whole `<pluginManagement>` section with the following:
 
 ```xml
 <plugins>
   <plugin>
     <groupId>com.github.eirslett</groupId>
     <artifactId>frontend-maven-plugin</artifactId>
-    <!-- Find the latest version of the plugin in Github -->
-    <!-- https://github.com/eirslett/frontend-maven-plugin/tags -->
-    <version>1.14.2</version>
+    <version>${frontend-maven-plugin.version}</version>
 
     <configuration>
-      <!-- This is where the Node binary is downloaded, change as appropiate -->
       <installDirectory>target</installDirectory>
     </configuration>
 
@@ -79,8 +89,7 @@ root
           <goal>install-node-and-npm</goal>
         </goals>
         <configuration>
-          <!-- Change as appropiate -->
-          <nodeVersion>v20.9.0</nodeVersion>
+          <nodeVersion>${node.version}</nodeVersion>
         </configuration>
       </execution>
       <execution>
@@ -107,8 +116,7 @@ root
   </plugin>
   <plugin>
     <artifactId>maven-resources-plugin</artifactId>
-    <!-- Change as appropiate -->
-    <version>3.3.1</version>
+    <version>${maven-resources-plugin.version}</version>
     <executions>
       <execution>
         <id>copy react build files</id>
@@ -120,8 +128,7 @@ root
           <outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
           <resources>
             <resource>
-              <!-- Replace with the output directory of React build -->
-              <directory>${basedir}/dist</directory>
+              <directory>${frontend.build.output.dir}</directory>
             </resource>
           </resources>
         </configuration>
@@ -131,7 +138,7 @@ root
 </plugins>
 ```
 
-2. Add the `frontend` module as dependency into the `backend` module (add to `backend/pom.xml`):
+1. Add the `frontend` module as dependency into the `backend` module (add to `backend/pom.xml`):
 
 ```xml
 <!-- Change as appropiate -->
