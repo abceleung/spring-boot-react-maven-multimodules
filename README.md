@@ -2,6 +2,14 @@
 
 My solution to the question I posted on [Reddit](https://old.reddit.com/r/learnjava/comments/17kbto4/maven_multimodules_and_reactspring_boot/).
 
+## Note
+
+A even more optimal way is to use Spring BOM instead of Spring Parent in the backend POM.
+
+With BOM, you can properly set the parent of the backend project to the root level POM.
+
+However I can't figure out how to set Spring BOM properly, so you have to do it yourself.
+
 ## Instruction
 
 ### First steps
